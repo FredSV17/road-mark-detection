@@ -1,6 +1,7 @@
 import cv2
 import os
 import random
+import numpy as np
 
 class_colors = {
     0: (255, 0, 0),       # Red
@@ -78,4 +79,25 @@ def show_bboxes(train, test):
     image_list = [cv2.imread(img_path) for img_path in random.sample(train[0], num_examples)]
     os.makedirs(f'bounding_boxes/examples', exist_ok=True)
                 
-    cv2.imwrite(f'bounding_boxes/test/{img_name + extension}', new_img)   
+    cv2.imwrite(f'bounding_boxes/test/{img_name + extension}', new_img)
+    
+def create_heatmap(img_shape, labels, curr_class):
+    h, w, _ = img_shape
+
+    # Create an empty "map" of zeros (same size as image)
+    
+    mask = np.zeros((h, w), dtype=np.uint8)
+    for polygon in labels:
+        parameters = list(map(float, polygon.split()))
+        values = parameters[1:]
+        points = [(int(values[i] * w), int(values[i + 1] * h)) for i in range(0, len(values), 2)]
+        for i in range(len(points)):
+            start = points[i]
+            end = points[(i + 1) % len(points)]
+            cv2.line(new_img, start, end, class_colors[parameters[0]], 2)
+    # Define polygon points
+    points = np.array([[100, 50], [200, 80], [150, 200]], np.int32)
+    points = points.reshape((-1, 1, 2))
+
+    # Fill polygon area with 1s
+    cv2.fillPoly(mask, [points], color=1)
