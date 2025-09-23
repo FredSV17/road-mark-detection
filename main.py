@@ -4,7 +4,7 @@ from data_points import DataPointsPoly
 
 if __name__ == "__main__":
     dl = DataPointsPoly()
-    test = dl.get_bounding_boxes()
+    test = dl.all_classes_heatmap()
     train = dl.get_path_list("train")
     test = dl.get_path_list("train")
     show_bboxes(train, test)
