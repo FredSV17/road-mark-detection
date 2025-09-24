@@ -208,6 +208,6 @@ __marimo__/
 
 data
 bounding_boxes/train
-bounding_boxes/val
+bounding_boxes/valid
 bounding_boxes/test
 launch.json

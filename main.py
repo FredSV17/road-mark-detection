@@ -1,10 +1,7 @@
 from data_loader import DataLoader
-from bounding_box_utils import show_bboxes
-from data_points import DataPointsPoly
+from bb_utils import all_classes_heatmap, save_bboxes
 
 if __name__ == "__main__":
-    dl = DataPointsPoly()
-    test = dl.all_classes_heatmap()
-    train = dl.get_path_list("train")
-    test = dl.get_path_list("train")
-    show_bboxes(train, test)
+    dl_list = [DataLoader('train'),DataLoader('test'),DataLoader('valid')]
+    all_classes_heatmap(dl_list[0])
+    save_bboxes(dl_list)
