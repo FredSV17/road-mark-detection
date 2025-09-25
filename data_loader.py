@@ -9,7 +9,6 @@ class DataLoader:
         self.img_shape = (640,640)
         self.dt_type = dataset
         
-        # TODO: Code only works with sagittal images for now
         images_path = os.path.join(base_path, f"{dataset}/images")
         labels_path = os.path.join(base_path, f"{dataset}/labels")
         self.dt_dict = {  
@@ -32,6 +31,6 @@ class DataLoader:
                 # Get points in bounding box
                 points = [(int(points[i] * self.img_shape[0]), int(points[i + 1] * self.img_shape[1])) for i in range(0, len(points), 2)]
                 # Save in a dictionary
-                bounding_box_dict[parameters[0]] += [points]
+                bounding_box_dict[int(parameters[0])] += [points]
         return bounding_box_dict
     

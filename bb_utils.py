@@ -131,4 +131,4 @@ def all_classes_heatmap(data : DataLoader):
     # # Adjust layout to prevent overlapping titles/labels
     # plt.tight_layout()
 
-    fig.savefig("heatmaps.png")
+    fig.savefig("data_analysis/heatmaps.png")
