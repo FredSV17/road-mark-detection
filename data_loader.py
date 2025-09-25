@@ -15,8 +15,20 @@ class DataLoader:
                         "images": sorted([f"{images_path}/{img}" for img in os.listdir(images_path) if img.endswith('.jpg')]),
                         "labels": sorted([f"{labels_path}/{lbl}" for lbl in os.listdir(labels_path) if lbl.endswith('.txt')])
                     }
+        self.dt_dict['count'] = self.get_bb_counts()
         self.bb_dict = self.define_bounding_boxes()
-
+        
+    def get_bb_counts(self):
+        # Get list of labels
+        labels = self.dt_dict['labels']
+        bb_count = []
+        for file in labels:
+            with open(file, 'r') as f:
+                values = f.readlines()
+                f.close()
+            bb_count.append(len(values))
+        return bb_count
+    
     def define_bounding_boxes(self):
         bounding_box_dict = defaultdict(list)
         # Get list of labels
