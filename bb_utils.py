@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import seaborn  as sns
 
 from data_loader import DataLoader
+from shapely.geometry import Polygon
 
 class_colors = {
     0: (255, 0, 0),       # Red
@@ -25,6 +26,12 @@ class_colors = {
     11: (0, 0, 128),      # Navy
     12: (128, 0, 0),      # Maroon
     13: (0, 128, 0),      # Dark Green
+}
+
+plot_labels = {
+    'train' : 'training',
+    'test' : 'testing',
+    'valid' : 'validation'
 }
 
 def show_image_bbox(img, bbox_list):
@@ -117,18 +124,34 @@ def make_heatmap(data : DataLoader, bb_class=0):
         heatmap += mask
     return heatmap
     
-def all_classes_heatmap(data : DataLoader):
-    fig, axes = plt.subplots(5, 3, figsize=(50, 50))
-    for i in range(13):
-        heatmap = make_heatmap(data, bb_class=i)
+def all_classes_heatmap(dataset_list : list[DataLoader]):
+    for dataset in dataset_list:
+        fig, axes = plt.subplots(5, 3, figsize=(50, 50))
+        for i in range(13):
+            heatmap = make_heatmap(dataset, bb_class=i)
 
-        # Compute row and column for this subplot
-        row = i // 3
-        col = i % 3
-        # Plot the first heatmap on the first axis (axes[0])
-        sns.heatmap(heatmap, cmap='hot', xticklabels=False, yticklabels=False, ax=axes[row][col])
+            # Compute row and column for this subplot
+            row = i // 3
+            col = i % 3
+            # Plot the first heatmap on the first axis (axes[0])
+            sns.heatmap(heatmap, cmap='hot', xticklabels=False, yticklabels=False, ax=axes[row][col])
 
-    # # Adjust layout to prevent overlapping titles/labels
-    # plt.tight_layout()
-
-    fig.savefig("data_analysis/heatmaps.png")
+        # # Adjust layout to prevent overlapping titles/labels
+        # plt.tight_layout()
+        fig.savefig(f"data_analysis/heatmaps_{dataset.dt_type}.png")
+    
+def get_bounding_box_areas(dataset_list : list[DataLoader]):
+    area_list = []
+    for dataset in dataset_list:
+        for bb_class in list(dataset.bb_dict.values()):
+            for bounding_box in bb_class:
+                polygon = Polygon(bounding_box)
+                # Get the area of the polygon
+                area_list.append(polygon.area)
+                # area = get_area(points)
+                # area_list.append(area)
+        # Create histogram for bounding box count in images
+        sns.histplot(data=area_list, bins=10)
+        plt.title(f"Bounding box area histogram ({plot_labels[dataset.dt_type]} dataset)")
+        plt.savefig(f"data_analysis/bb_area_{plot_labels[dataset.dt_type]}")
+        plt.clf()
