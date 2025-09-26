@@ -13,19 +13,27 @@ However, this introduces spatial bias into the model, since it may overfit to ce
 
 2. Class Imbalance
 
-The dataset has significant class imbalance.
+- The dataset has significant class imbalance.
 
-Most bounding boxes belong to Class 2, while Classes 10 and 11 have almost no representation.
+- Most bounding boxes belong to Class 2, while Classes 10 and 11 have almost no representation.
 
-This imbalance can severely impact model generalization and needs to be addressed (e.g., via re-weighting, data augmentation, or sampling strategies).
+- This imbalance can severely impact model generalization and needs to be addressed (e.g., via re-weighting, data augmentation, or sampling strategies).
 
 3. Objects per Image Distribution
 
-The number of objects per image is also unevenly distributed.
+- The number of objects per image is also unevenly distributed.
 
-Many images contain only a few bounding boxes, while a small portion has up to 25 objects.
+- Many images contain only a few bounding boxes, while a small portion has up to 25 objects.
 
-This imbalance can lead to challenges during training, as the model might underperform on crowded scenes.
+- This imbalance can lead to challenges during training, as the model might underperform on crowded scenes.
+
+4. Bounding box Area Distribution
+
+- The bounding box area distribution is skewed: most bounding boxes are small.
+
+- This increases the difficulty of detection, since small objects are harder for models (specially for single stage detectors) to localize accurately.
+
+- A skewed distribution may bias the model toward learning certain object scales while underperforming on rare, larger objects.
 
 ### Next Steps
 
