@@ -26,7 +26,7 @@ It is recommended to use a virtual environment (e.g., venv or conda).
 
 The main script is inside the data_analysis/ folder.
 
-    python data_analysis/main.py
+    python -m data_analysis.analysis
 ## Data Analysis Insights
 **1. Spatial Bias**
 

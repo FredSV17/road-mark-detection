@@ -1,17 +1,16 @@
 import os
 import cv2
 
-import random
 import numpy as np
 from collections import defaultdict
 
 import matplotlib.pyplot as plt
 import seaborn  as sns
 
-from data_loader import DataLoader
+from shared.data_loader import DataLoader
 from shapely.geometry import Polygon
 
-from viz_config import CLASS_COLORS, PLOT_LABELS
+from data_analysis.viz_config import CLASS_COLORS, PLOT_LABELS
 
 def show_image_bbox_poly(img, lbl_values):
     new_img = img

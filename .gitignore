@@ -207,7 +207,8 @@ marimo/_lsp/
 __marimo__/
 
 data
-bounding_boxes/train
-bounding_boxes/valid
-bounding_boxes/test
+data_analysis/bounding_boxes/train
+data_analysis/bounding_boxes/valid
+data_analysis/bounding_boxes/test
 launch.json
+settings.json

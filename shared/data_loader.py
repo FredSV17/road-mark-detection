@@ -43,5 +43,5 @@ class DataLoader:
                 points = [(int(points[i] * self.img_shape[0]), int(points[i + 1] * self.img_shape[1])) for i in range(0, len(points), 2)]
                 # Save in a dictionary
                 bbox_dict[int(parameters[0])] += [points]
-        return bbox
+        return bbox_dict
     
