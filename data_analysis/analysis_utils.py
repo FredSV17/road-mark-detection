@@ -16,7 +16,7 @@ def check_class_representation(dl_list : List[DataLoader]):
         class_representation_df = pd.DataFrame(class_count, columns=["Class", "Count"])
         sns.barplot(class_representation_df, x='Class', y='Count')
         plt.title(f"Class representation in images ({PLOT_LABELS[dl.dt_type]} dataset)")
-        plt.savefig(f"data_analysis/class_representation_{PLOT_LABELS[dl.dt_type]}")
+        plt.savefig(f"data_analysis/results/class_representation_{PLOT_LABELS[dl.dt_type]}")
         plt.clf()
         
 def check_objects_per_image(dl_list : List[DataLoader]):
@@ -25,5 +25,5 @@ def check_objects_per_image(dl_list : List[DataLoader]):
         # Create histogram for bounding box count in images
         sns.histplot(data=dl.dt_dict['count'])
         plt.title(f"Object count histogram ({PLOT_LABELS[dl.dt_type]} dataset)")
-        plt.savefig(f"data_analysis/object_count_{PLOT_LABELS[dl.dt_type]}")
+        plt.savefig(f"data_analysis/results/object_count_{PLOT_LABELS[dl.dt_type]}")
         plt.clf()

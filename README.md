@@ -4,6 +4,30 @@ This project focuses on detecting road markings using computer vision and deep l
 
 At the current stage, the work has primarily focused on data analysis and visualization. This step helps uncover dataset characteristics that may affect model performance.
 
+## How to Run the Code
+
+### Clone the repository
+
+    git clone https://github.com/<your-username>/<your-repo>.git
+    cd <your-repo>
+
+### Set up the environment
+
+It is recommended to use a virtual environment (e.g., venv or conda).
+
+    python -m venv venv
+    source venv/bin/activate   # On Linux/Mac
+    venv\Scripts\activate      # On Windows
+
+### Install dependencies
+
+    pip install -r requirements.txt
+
+### Run Data Analysis
+
+The main script is inside the data_analysis/ folder.
+
+    python data_analysis/main.py
 ### Data Analysis Insights
 1. Spatial Bias
 
