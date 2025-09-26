@@ -7,7 +7,7 @@ from collections import defaultdict
 import matplotlib.pyplot as plt
 import seaborn  as sns
 
-from shared.data_loader import DataLoader
+from data_analysis.bbox_loader import BBoxLoader
 from shapely.geometry import Polygon
 
 from data_analysis.viz_config import CLASS_COLORS, PLOT_LABELS
@@ -25,7 +25,8 @@ def show_image_bbox_poly(img, lbl_values):
             cv2.line(new_img, start, end, CLASS_COLORS[parameters[0]], 2)
     return new_img
 
-def save_bboxes(dt_list : list[DataLoader]):
+def save_bboxes(dt_list : list[BBoxLoader]):
+    print("Saving bounding boxes...")
     for dataset in dt_list:
         for img_path, lbl_path in zip(dataset.dt_dict["images"], dataset.dt_dict["labels"]):
             # Read the image
@@ -59,7 +60,7 @@ def get_bounding_boxes(self, dataset='train'):
             bbox_dict[parameters[0]] += [points]
     return bbox_dict
             
-def make_heatmap(data : DataLoader, bb_class=0):
+def make_heatmap(data : BBoxLoader, bb_class=0):
     heatmap = np.zeros(data.img_shape, dtype=np.uint8)
     for bbox in data.bb_dict[bb_class]:
         
@@ -76,7 +77,8 @@ def make_heatmap(data : DataLoader, bb_class=0):
         heatmap += mask
     return heatmap
     
-def all_classes_heatmap(dataset_list : list[DataLoader]):
+def all_classes_heatmap(dataset_list : list[BBoxLoader]):
+    print("Creating heatmap for all classes...")
     for dataset in dataset_list:
         fig, axes = plt.subplots(5, 3, figsize=(50, 50))
         for i in range(13):
@@ -90,7 +92,8 @@ def all_classes_heatmap(dataset_list : list[DataLoader]):
 
         fig.savefig(f"data_analysis/results/heatmaps_{dataset.dt_type}.png")
     
-def get_bounding_box_areas(dataset_list : list[DataLoader]):
+def get_bounding_box_areas(dataset_list : list[BBoxLoader]):
+    print("Creating bounding box area graph...")
     area_list = []
     for dataset in dataset_list:
         for bb_class in list(dataset.bb_dict.values()):

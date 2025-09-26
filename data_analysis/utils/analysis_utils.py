@@ -8,6 +8,7 @@ import seaborn as sns
 from data_analysis.viz_config import PLOT_LABELS
 
 def check_class_representation(dl_list : List[DataLoader]):
+    print("Creating a graph of class representation...")
     for dl in dl_list:
         # Count the amout of bounding boxes
         class_count = [[key, len(dl.bb_dict[key])] for key in dl.bb_dict.keys()]
@@ -19,6 +20,7 @@ def check_class_representation(dl_list : List[DataLoader]):
         plt.clf()
         
 def check_objects_per_image(dl_list : List[DataLoader]):
+    print("Creating a graph of objects per image...")
     for dl in dl_list:
         # Create histogram for bounding box count in images
         sns.histplot(data=dl.dt_dict['count'])
