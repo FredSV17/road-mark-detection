@@ -11,28 +11,7 @@ import seaborn  as sns
 from data_loader import DataLoader
 from shapely.geometry import Polygon
 
-class_colors = {
-    0: (255, 0, 0),       # Red
-    1: (0, 255, 0),       # Green
-    2: (0, 0, 255),       # Blue
-    3: (255, 255, 0),     # Yellow
-    4: (255, 0, 255),     # Magenta
-    5: (0, 255, 255),     # Cyan
-    6: (255, 165, 0),     # Orange
-    7: (128, 0, 128),     # Purple
-    8: (0, 128, 128),     # Teal
-    9: (128, 128, 0),     # Olive
-    10: (255, 192, 203),  # Pink
-    11: (0, 0, 128),      # Navy
-    12: (128, 0, 0),      # Maroon
-    13: (0, 128, 0),      # Dark Green
-}
-
-plot_labels = {
-    'train' : 'training',
-    'test' : 'testing',
-    'valid' : 'validation'
-}
+from viz_config import CLASS_COLORS, PLOT_LABELS
 
 def show_image_bbox(img, bbox_list):
     new_img = img
@@ -58,7 +37,7 @@ def show_image_bbox_poly(img, lbl_values):
         for i in range(len(points)):
             start = points[i]
             end = points[(i + 1) % len(points)]
-            cv2.line(new_img, start, end, class_colors[parameters[0]], 2)
+            cv2.line(new_img, start, end, CLASS_COLORS[parameters[0]], 2)
     return new_img
 
 def save_bboxes(dt_list : list[DataLoader]):
@@ -77,19 +56,7 @@ def save_bboxes(dt_list : list[DataLoader]):
             
             cv2.imwrite(f'bounding_boxes/{dataset.dt_type}/{img_name + extension}', new_img)
             
-            
-    # # Pick random examples in train and put it in the examples folder
-    # num_examples = 5
-    # image_list = [cv2.imread(img_path) for img_path in random.sample(train[0], num_examples)]
-    
-    # for img_path in image_list:
-    #     # Read the image
-    #     image = cv2.imread(img_path)
-        
-    #     os.makedirs(f'bounding_boxes/examples', exist_ok=True)
-                    
-    #     cv2.imwrite(f'bounding_boxes/examples/{img_path}', new_img)
-    
+
 def get_bounding_boxes(self, dataset='train'):
     bounding_box_dict = defaultdict(list)
     # Get list of labels
@@ -133,11 +100,9 @@ def all_classes_heatmap(dataset_list : list[DataLoader]):
             # Compute row and column for this subplot
             row = i // 3
             col = i % 3
-            # Plot the first heatmap on the first axis (axes[0])
+            # Plot the heatmap
             sns.heatmap(heatmap, cmap='hot', xticklabels=False, yticklabels=False, ax=axes[row][col])
 
-        # # Adjust layout to prevent overlapping titles/labels
-        # plt.tight_layout()
         fig.savefig(f"data_analysis/heatmaps_{dataset.dt_type}.png")
     
 def get_bounding_box_areas(dataset_list : list[DataLoader]):
@@ -148,10 +113,9 @@ def get_bounding_box_areas(dataset_list : list[DataLoader]):
                 polygon = Polygon(bounding_box)
                 # Get the area of the polygon
                 area_list.append(polygon.area)
-                # area = get_area(points)
-                # area_list.append(area)
+                
         # Create histogram for bounding box count in images
         sns.histplot(data=area_list, bins=10)
-        plt.title(f"Bounding box area histogram ({plot_labels[dataset.dt_type]} dataset)")
-        plt.savefig(f"data_analysis/bb_area_{plot_labels[dataset.dt_type]}")
+        plt.title(f"Bounding box area histogram ({PLOT_LABELS[dataset.dt_type]} dataset)")
+        plt.savefig(f"data_analysis/bb_area_{PLOT_LABELS[dataset.dt_type]}")
         plt.clf()
