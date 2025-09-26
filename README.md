@@ -8,8 +8,7 @@ At the current stage, the work has primarily focused on data analysis and visual
 
 ### Clone the repository
 
-    git clone https://github.com/<your-username>/<your-repo>.git
-    cd <your-repo>
+    git clone https://github.com/FredSV17/road-mark-detection
 
 ### Set up the environment
 
@@ -28,14 +27,14 @@ It is recommended to use a virtual environment (e.g., venv or conda).
 The main script is inside the data_analysis/ folder.
 
     python data_analysis/main.py
-### Data Analysis Insights
-1. Spatial Bias
+## Data Analysis Insights
+**1. Spatial Bias**
 
-Bounding box heatmaps show that most objects are concentrated in the lower part of the image (expected due to the camera perspective).
+ - Bounding box heatmaps show that most objects are concentrated in the lower part of the image (expected due to the camera perspective).
 
-However, this introduces spatial bias into the model, since it may overfit to certain positions.
+- However, this introduces spatial bias into the model, since it may overfit to certain positions.
 
-2. Class Imbalance
+**2. Class Imbalance**
 
 - The dataset has significant class imbalance.
 
@@ -43,7 +42,7 @@ However, this introduces spatial bias into the model, since it may overfit to ce
 
 - This imbalance can severely impact model generalization and needs to be addressed (e.g., via re-weighting, data augmentation, or sampling strategies).
 
-3. Objects per Image Distribution
+**3. Objects per Image Distribution**
 
 - The number of objects per image is also unevenly distributed.
 
@@ -51,7 +50,7 @@ However, this introduces spatial bias into the model, since it may overfit to ce
 
 - This imbalance can lead to challenges during training, as the model might underperform on crowded scenes.
 
-4. Bounding box Area Distribution
+**4. Bounding box Area Distribution**
 
 - The bounding box area distribution is skewed: most bounding boxes are small.
 
