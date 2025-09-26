@@ -5,8 +5,8 @@ from collections import defaultdict
 from shared.data_loader import DataLoader
 
 class BBoxLoader(DataLoader):
-    def __init__(self, dataset='train'):
-        super().__init__(dataset)
+    def __init__(self, path, dataset='train'):
+        super().__init__(path, dataset)
         self.bb_count = self.get_bbox_counts()
         self.bb_dict = self.define_bounding_boxes()
         

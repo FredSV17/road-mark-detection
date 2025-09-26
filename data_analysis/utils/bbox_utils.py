@@ -18,16 +18,20 @@ def show_image_bbox_poly(img, lbl_values):
     for polygon in lbl_values:
         parameters = list(map(float, polygon.split()))
         values = parameters[1:]
-        points = [(int(values[i] * w), int(values[i + 1] * h)) for i in range(0, len(values), 2)]
+        # Get polygon coordinates (x,y)
+        points = [(int(values[i] * w), int(values[i + 1] * h)) 
+                  for i in range(0, len(values), 2)]
+        
         for i in range(len(points)):
             start = points[i]
             end = points[(i + 1) % len(points)]
             cv2.line(new_img, start, end, CLASS_COLORS[parameters[0]], 2)
     return new_img
 
-def save_bboxes(dt_list : list[BBoxLoader]):
-    print("Saving bounding boxes...")
+def save_imgs_with_bbox(dt_list : list[BBoxLoader], verbose=False):
     for dataset in dt_list:
+        if verbose:
+            print(f"Saving bounding boxes for {PLOT_LABELS[dataset.dt_type]} dataset ...")
         for img_path, lbl_path in zip(dataset.dt_dict["images"], dataset.dt_dict["labels"]):
             # Read the image
             image = cv2.imread(img_path)
@@ -43,23 +47,6 @@ def save_bboxes(dt_list : list[BBoxLoader]):
             cv2.imwrite(f'data_analysis/bounding_boxes/{dataset.dt_type}/{img_name + extension}', new_img)
             
 
-def get_bounding_boxes(self, dataset='train'):
-    bbox_dict = defaultdict(list)
-    # Get list of labels
-    labels = super().get_path_list(dataset)[1]
-    for file in labels:
-        with open(file, 'r') as f:
-            values = f.readlines()
-            f.close()
-        for bbox in values:
-            parameters = list(map(float, bbox.split()))
-            points = parameters[1:]
-            # Get points in bounding box
-            points = [(int(points[i] * self.img_shape[0]), int(points[i + 1] * self.img_shape[1])) for i in range(0, len(points), 2)]
-            # Save in a dictionary
-            bbox_dict[parameters[0]] += [points]
-    return bbox_dict
-            
 def make_heatmap(data : BBoxLoader, bb_class=0):
     heatmap = np.zeros(data.img_shape, dtype=np.uint8)
     for bbox in data.bb_dict[bb_class]:
@@ -77,12 +64,13 @@ def make_heatmap(data : BBoxLoader, bb_class=0):
         heatmap += mask
     return heatmap
     
-def all_classes_heatmap(dataset_list : list[BBoxLoader]):
-    print("Creating heatmap for all classes...")
-    for dataset in dataset_list:
+def all_classes_heatmap(dt_list : list[BBoxLoader], verbose=False):
+    for dt in dt_list:
+        if verbose:
+            print(f"Creating heatmaps for {PLOT_LABELS[dt.dt_type]} dataset...")
         fig, axes = plt.subplots(5, 3, figsize=(50, 50))
         for i in range(13):
-            heatmap = make_heatmap(dataset, bb_class=i)
+            heatmap = make_heatmap(dt, bb_class=i)
 
             # Compute row and column for this subplot
             row = i // 3
@@ -90,13 +78,15 @@ def all_classes_heatmap(dataset_list : list[BBoxLoader]):
             # Plot the heatmap
             sns.heatmap(heatmap, cmap='hot', xticklabels=False, yticklabels=False, ax=axes[row][col])
 
-        fig.savefig(f"data_analysis/results/heatmaps_{dataset.dt_type}.png")
+        fig.savefig(f"data_analysis/results/heatmaps_{dt.dt_type}.png")
     
-def get_bounding_box_areas(dataset_list : list[BBoxLoader]):
-    print("Creating bounding box area graph...")
+def get_bounding_box_areas(dt_list : list[BBoxLoader], verbose=False):
+    
     area_list = []
-    for dataset in dataset_list:
-        for bb_class in list(dataset.bb_dict.values()):
+    for dt in dt_list:
+        if verbose:
+            print(f"Creating bounding box area graph for {PLOT_LABELS[dt.dt_type]} dataset...")
+        for bb_class in list(dt.bb_dict.values()):
             for bounding_box in bb_class:
                 polygon = Polygon(bounding_box)
                 # Get the area of the polygon
@@ -104,8 +94,8 @@ def get_bounding_box_areas(dataset_list : list[BBoxLoader]):
                 
         # Create histogram for bounding box count in images
         sns.histplot(data=area_list, bins=10)
-        plt.title(f"Bounding box area histogram ({PLOT_LABELS[dataset.dt_type]} dataset)")
-        plt.savefig(f"data_analysis/results/bb_area_{PLOT_LABELS[dataset.dt_type]}")
+        plt.title(f"Bounding box area histogram ({PLOT_LABELS[dt.dt_type]} dataset)")
+        plt.savefig(f"data_analysis/results/bb_area_{PLOT_LABELS[dt.dt_type]}")
         plt.clf()
         
         
