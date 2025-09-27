@@ -1,4 +1,4 @@
-from shared.base_options import BaseOptions
+from data_analysis.analysis_options import AnalysisOptions
 
 from data_analysis.utils.bbox_utils import all_classes_heatmap, get_bounding_box_areas, save_imgs_with_bbox
 from data_analysis.bbox_loader import BBoxLoader
@@ -22,7 +22,7 @@ def run_analysis(path: str, dataset_list: list[str], save_bboxes: bool, verbose:
 
 
 def main():
-    args = BaseOptions().parser.parse_args()
+    args = AnalysisOptions().parser.parse_args()
     run_analysis(args.path, args.dataset, args.save_bboxes, args.verbose)
 
 
