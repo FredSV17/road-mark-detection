@@ -4,6 +4,7 @@ This project focuses on detecting road markings using computer vision and deep l
 
 At the current stage, the work has primarily focused on data analysis and visualization. This step helps uncover dataset characteristics that may affect model performance.
 
+Dataset from Kaggle: https://www.kaggle.com/datasets/pkdarabi/road-mark-detection
 ## How to Run the Code
 
 ### Clone the repository
@@ -26,11 +27,24 @@ It is recommended to use a virtual environment (e.g., venv or conda).
 
 The main script is inside the data_analysis/ folder.
 
-    python -m data_analysis.analysis
+    python -m data_analysis.analysis --path <base_dataset_path> --dataset <dataset_type> --save_bboxes --verbose
+
+Available Arguments:
+
+| Argument | Description |
+| :-- | :-- |
+| --path | Base dataset path containing all datasets (e.g., ./data).|
+| --dataset | Dataset type. Must match the dataset folder/file name. If analyzing multiple datasets, separate them with commas (e.g., train,valid).|
+| --save_bboxes | Flag to save images with bounding box visualizations.|
+| --verbose | Flag to enable verbose output for detailed logs.|
+
+Example:
+
+    python -m data_analysis.analysis --path ./data --dataset train,val --save_bboxes --verbose
 ## Data Analysis Insights
 **1. Spatial Bias**
 
- - Bounding box heatmaps show that most objects are concentrated in the lower part of the image (expected due to the camera perspective).
+- Bounding box heatmaps show that most objects are concentrated in the lower part of the image (expected due to the camera perspective).
 
 - However, this introduces spatial bias into the model, since it may overfit to certain positions.
 
