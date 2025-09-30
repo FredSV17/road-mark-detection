@@ -1,7 +1,7 @@
 import os
 import cv2
 
-from data_analysis.bbox_loader import BBoxLoader
+from shared.bbox_loader import BBoxLoader
 
 
 from data_analysis.viz_config import CLASS_COLORS, PLOT_LABELS

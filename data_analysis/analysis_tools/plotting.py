@@ -1,7 +1,7 @@
 from typing import List
 
 import pandas as pd
-from data_analysis.bbox_loader import BBoxLoader
+from shared.bbox_loader import BBoxLoader
 from shared.data_loader import DataLoader
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -23,16 +23,29 @@ def check_class_representation(dl_list : List[DataLoader], verbose=False):
         plt.savefig(f"data_analysis/results/class_representation_{PLOT_LABELS[dl.dt_type]}")
         plt.clf()
         
+        
+def get_bbox_counts(dt):
+        # Get list of labels
+        labels = dt.dt_dict['labels']
+        bbox_count = []
+        for file in labels:
+            with open(file, 'r') as f:
+                values = f.readlines()
+                f.close()
+            bbox_count.append(len(values))
+        return bbox_count
+    
 def check_objects_per_image(dt_list : List[BBoxLoader], verbose=False):
 
     for dt in dt_list:
         if verbose:
             print(f"Creating a graph of objects per image for {PLOT_LABELS[dt.dt_type]} dataset...")
         # Create histogram for bounding box count in images
-        sns.histplot(data=dt.bb_count)
+        sns.histplot(data=get_bbox_counts(dt))
         plt.title(f"Object count histogram ({PLOT_LABELS[dt.dt_type]} dataset)")
         plt.savefig(f"data_analysis/results/object_count_{PLOT_LABELS[dt.dt_type]}")
         plt.clf()
+        
         
 def make_heatmap(data : BBoxLoader, bb_class=0):
     heatmap = np.zeros(data.img_shape, dtype=np.uint8)
