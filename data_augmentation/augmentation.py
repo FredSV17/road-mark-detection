@@ -1,9 +1,9 @@
-from data_augmentation import img_transform
+from data_augmentation.img_transform import img_transform
 from data_augmentation.aug_options import AugOptions
-from shared.data_loader import DataLoader
+from shared.bbox_loader import BBoxLoader
 def run_data_augmentation(path, verbose):
-    dl = DataLoader(path)
-    img_transform(dl.dt_dict['images'][0],dl.dt_dict['labels'][0])
+    dl = BBoxLoader(path)
+    img_transform(dl)
     
 
 def main():

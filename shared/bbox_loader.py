@@ -27,3 +27,17 @@ class BBoxLoader(DataLoader):
                 bbox_dict[int(parameters[0])] += [points]
         return bbox_dict
     
+    # Prototype function
+    def get_bounding_boxes_by_label(self, label_path):
+        bboxes = []
+        with open(label_path, 'r') as f:
+            values = f.readlines()
+            f.close()
+        for bbox in values:
+            parameters = list(map(float, bbox.split()))
+            points = parameters[1:]
+            # Get points in bounding box
+            points = [(int(points[i] * self.img_shape[0]), int(points[i + 1] * self.img_shape[1])) for i in range(0, len(points), 2)]
+            # Save in a dictionary
+            bboxes += [list(points)]
+        return bboxes
