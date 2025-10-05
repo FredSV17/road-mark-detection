@@ -13,7 +13,7 @@ class BBoxLoader(DataLoader):
     def define_bounding_boxes(self):
         bbox_dict = defaultdict(list)
         # Get list of labels
-        labels = self.dt_dict['labels']
+        labels = [item[1] for item in self.dt_paired_list]
         for file in labels:
             with open(file, 'r') as f:
                 values = f.readlines()

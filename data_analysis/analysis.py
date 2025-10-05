@@ -2,11 +2,11 @@ from data_analysis.analysis_options import AnalysisOptions
 from data_analysis.analysis_tools.bbox_save import save_imgs_with_bbox
 from data_analysis.analysis_tools.plotting import all_classes_heatmap, get_bounding_box_areas, check_class_representation, check_objects_per_image
 
-from shared.bbox_loader import BBoxLoader
+from data_analysis.bbox_loader import BBoxLoader
 
 
 
-def run_analysis(path: str, dataset_list: list[str], save_bboxes: bool, verbose: bool):
+def run_analysis(path, dataset_list, save_bboxes, verbose):
     dl_list = []
     for dataset in dataset_list.split(','):
         try:

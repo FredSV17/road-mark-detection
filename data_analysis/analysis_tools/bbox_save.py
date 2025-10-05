@@ -1,7 +1,7 @@
 import os
 import cv2
 
-from shared.bbox_loader import BBoxLoader
+from data_analysis.bbox_loader import BBoxLoader
 
 
 from data_analysis.viz_config import CLASS_COLORS, PLOT_LABELS
@@ -22,11 +22,11 @@ def show_image_bbox_poly(img, lbl_values):
             cv2.line(new_img, start, end, CLASS_COLORS[parameters[0]], 2)
     return new_img
 
-def save_imgs_with_bbox(dt_list : list[BBoxLoader], verbose=False):
+def save_imgs_with_bbox(dt_list, verbose=False):
     for dataset in dt_list:
         if verbose:
             print(f"Saving bounding boxes for {PLOT_LABELS[dataset.dt_type]} dataset ...")
-        for img_path, lbl_path in zip(dataset.dt_dict["images"], dataset.dt_dict["labels"]):
+        for img_path, lbl_path in dataset.dt_paired_list:
             # Read the image
             image = cv2.imread(img_path)
             

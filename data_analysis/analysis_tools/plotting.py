@@ -1,7 +1,7 @@
 from typing import List
 
 import pandas as pd
-from shared.bbox_loader import BBoxLoader
+from data_analysis.bbox_loader import BBoxLoader
 from shared.data_loader import DataLoader
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -26,7 +26,7 @@ def check_class_representation(dl_list : List[DataLoader], verbose=False):
         
 def get_bbox_counts(dt):
         # Get list of labels
-        labels = dt.dt_dict['labels']
+        labels = [item[1] for item in dt.dt_paired_list]
         bbox_count = []
         for file in labels:
             with open(file, 'r') as f:
@@ -64,7 +64,7 @@ def make_heatmap(data : BBoxLoader, bb_class=0):
         heatmap += mask
     return heatmap
     
-def all_classes_heatmap(dt_list : list[BBoxLoader], verbose=False):
+def all_classes_heatmap(dt_list, verbose=False):
     for dt in dt_list:
         if verbose:
             print(f"Creating heatmaps for {PLOT_LABELS[dt.dt_type]} dataset...")
@@ -80,7 +80,7 @@ def all_classes_heatmap(dt_list : list[BBoxLoader], verbose=False):
 
         fig.savefig(f"data_analysis/results/heatmaps_{dt.dt_type}.png")
     
-def get_bounding_box_areas(dt_list : list[BBoxLoader], verbose=False):
+def get_bounding_box_areas(dt_list, verbose=False):
     
     area_list = []
     for dt in dt_list:

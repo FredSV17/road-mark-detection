@@ -12,9 +12,9 @@ class DataLoader:
             labels_path = os.path.join(path, f"{dataset}/labels")
         except Exception as e:
             raise ValueError(e)
-        self.dt_dict = {  
-                        "images": sorted([f"{images_path}/{img}" for img in os.listdir(images_path) if img.endswith('.jpg')]),
-                        "labels": sorted([f"{labels_path}/{lbl}" for lbl in os.listdir(labels_path) if lbl.endswith('.txt')])
-                    }
-
+        
+        # Create a paired list (image, label)
+        image_list = sorted([f"{images_path}/{img}" for img in os.listdir(images_path) if img.endswith('.jpg')])
+        label_list = sorted([f"{labels_path}/{lbl}" for lbl in os.listdir(labels_path) if lbl.endswith('.txt')])
+        self.dt_paired_list = list(zip(image_list, label_list))
     
