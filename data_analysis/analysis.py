@@ -1,8 +1,8 @@
 from data_analysis.analysis_options import AnalysisOptions
-from data_analysis.analysis_tools.bbox_save import save_imgs_with_bbox
+from shared.tools.bbox_save import save_dataset_with_bboxes
 from data_analysis.analysis_tools.plotting import all_classes_heatmap, get_bounding_box_areas, check_class_representation, check_objects_per_image
 
-from data_analysis.bbox_loader import BBoxLoader
+from shared.bbox_loader import BBoxLoader
 
 
 
@@ -19,7 +19,7 @@ def run_analysis(path, dataset_list, save_bboxes, verbose):
     check_objects_per_image(dl_list, verbose)
     all_classes_heatmap(dl_list, verbose)
     if save_bboxes:
-        save_imgs_with_bbox(dl_list, verbose)
+        save_dataset_with_bboxes(dl_list, verbose)
 
 
 def main():

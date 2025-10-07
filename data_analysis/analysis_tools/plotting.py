@@ -1,7 +1,7 @@
 from typing import List
 
 import pandas as pd
-from data_analysis.bbox_loader import BBoxLoader
+from shared.bbox_loader import BBoxLoader
 from shared.data_loader import DataLoader
 import matplotlib.pyplot as plt
 import seaborn as sns

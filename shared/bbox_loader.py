@@ -7,10 +7,18 @@ from shared.data_loader import DataLoader
 class BBoxLoader(DataLoader):
     def __init__(self, path, dataset='train'):
         super().__init__(path, dataset)
-        self.bb_dict = self.define_bounding_boxes()
+        self.bb_dict = self.group_bounding_boxes_by_class()
         
     
-    def define_bounding_boxes(self):
+    def group_bounding_boxes_by_class(self):
+        """
+        Returns a dict mapping class names to lists of bounding boxes.
+        Example:
+        {
+            "0": [(x1, y1, x2, y2), ...],
+            "1": [(x1, y1, x2, y2), ...]
+        }
+        """
         bbox_dict = defaultdict(list)
         # Get list of labels
         labels = [item[1] for item in self.dt_paired_list]
@@ -27,8 +35,10 @@ class BBoxLoader(DataLoader):
                 bbox_dict[int(parameters[0])] += [points]
         return bbox_dict
     
-    # Prototype function
     def get_bounding_boxes_by_label(self, label_path):
+        """
+        Returns a list of all bounding boxes contained in a txt label file.
+        """
         bboxes = []
         with open(label_path, 'r') as f:
             values = f.readlines()
