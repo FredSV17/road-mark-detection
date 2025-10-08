@@ -38,6 +38,11 @@ class BBoxLoader(DataLoader):
     def get_bounding_boxes_by_label(self, label_path):
         """
         Returns a list of all bounding boxes contained in a txt label file.
+        Example:
+        [
+            [2, [(x1, y1, x2, y2), ...]]
+            [1, [(x1, y1, x2, y2), ...]]
+        ]
         """
         bboxes = []
         with open(label_path, 'r') as f:
@@ -49,5 +54,5 @@ class BBoxLoader(DataLoader):
             # Get points in bounding box
             points = [(int(points[i] * self.img_shape[0]), int(points[i + 1] * self.img_shape[1])) for i in range(0, len(points), 2)]
             # Save in a dictionary
-            bboxes += [list(points)]
+            bboxes += [[int(parameters[0]),list(points)]]
         return bboxes

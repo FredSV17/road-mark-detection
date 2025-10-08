@@ -16,18 +16,21 @@ def draw_bbox(img, points, color=(0, 255, 0)):
     return img
 
 
-def save_img_with_bboxes(img, img_path, bboxes, bbox_path):
+def save_img_with_bboxes(img, img_path, bboxes, lbl_path, aug_path):
 
     
-    # # Read the label file
-    # with open(lbl_path, 'r') as f:
-    #     lbl_values = f.readlines()
-    img_name, extension = os.path.splitext(os.path.basename(img_path))
-    for bbox in bboxes:
-        img = draw_bbox(img, bbox)
+    os.makedirs(f'{aug_path}/images', exist_ok=True)
+    os.makedirs(f'{aug_path}/labels', exist_ok=True)
     
-    cv2.imwrite(f'{bbox_path}/{img_name + extension}', img)
+    img_name, extension_img = os.path.splitext(os.path.basename(img_path))
     
+
+    cv2.imwrite(f'{aug_path}/images/{img_name + extension_img}', img)
+    
+    with open(f'{aug_path}/labels/{os.path.basename(lbl_path)}', "w") as f:
+        for row in bboxes:
+            f.write(" ".join(map(str, row)) + "\n")
+        f.close()
     
 def get_image_bbox_by_label(img_path, lbl_path, img_shape):
 
