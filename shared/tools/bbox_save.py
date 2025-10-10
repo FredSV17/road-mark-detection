@@ -29,7 +29,7 @@ def save_img_with_bboxes(img, img_path, bboxes, lbl_path, aug_path):
     
     with open(f'{aug_path}/labels/{os.path.basename(lbl_path)}', "w") as f:
         for row in bboxes:
-            f.write(" ".join(map(str, row)) + "\n")
+            f.write(f'{row[0]} ' + " ".join(" ".join(map(str, element)) for element in row[1]) + "\n")
         f.close()
     
 def get_image_bbox_by_label(img_path, lbl_path, img_shape):
