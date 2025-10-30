@@ -7,11 +7,12 @@ import os
 import imgaug.augmenters as iaa
 from imgaug.augmentables.polys import Polygon, PolygonsOnImage
 
+from data_augmentation.augmentation_types.bbox_proto import BoundingBoxesPoly
 from shared.tools.bbox_save import save_img_with_bboxes
 from shared.bbox_loader import BBoxLoader
 from tqdm import tqdm
 import os
-
+from data_augmentation.augmentation_types.helper import to_tensor
 def make_transform():
     dl = BBoxLoader('data')
 
@@ -21,9 +22,10 @@ def make_transform():
         image = cv2.imread(img)
         
         polygons = [
-            Polygon(bbox) for bbox in [bboxes[1] for bboxes in bboxes_class]
+            bbox for bbox in [bboxes[1] for bboxes in bboxes_class]
         ]
-
+        bbox_poly = BoundingBoxesPoly(polygons, image.shape)
+        #to_tensor(polygons)
         polygons_on_image = PolygonsOnImage(polygons, shape=image.shape)
         seq = iaa.Sequential([
             iaa.Affine(rotate=10, scale=1.5),
