@@ -3,7 +3,7 @@ import albumentations as A
 from ultralytics import YOLO
 
 # Load a model
-model = YOLO("yolo11.pt")
+model = YOLO("yolo11n.pt")
 
 # Training with custom augmentation parameters
 model.train(data="data/data.yaml", epochs=100, hsv_h=0.03, hsv_s=0.6, hsv_v=0.5)

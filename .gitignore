@@ -211,5 +211,6 @@ data_analysis/bounding_boxes/train
 data_analysis/bounding_boxes/valid
 data_analysis/bounding_boxes/test
 data_augmentation/augmented_dataset
+runs
 launch.json
 settings.json
