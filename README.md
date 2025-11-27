@@ -29,6 +29,11 @@ The main script is inside the data_analysis/ folder.
 
     python -m data_analysis.analysis --path <base_dataset_path> --dataset <dataset_type> --save_bboxes --verbose
 
+### Run Model Training
+
+The main script is inside the data_training/ folder.
+
+    python -m data_analysis.analysis
 Available Arguments:
 
 | Argument | Description |
