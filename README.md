@@ -29,11 +29,6 @@ The main script is inside the data_analysis/ folder.
 
     python -m data_analysis.analysis --path <base_dataset_path> --dataset <dataset_type> --save_bboxes --verbose
 
-### Run Model Training
-
-The main script is inside the data_training/ folder.
-
-    python -m data_analysis.analysis
 Available Arguments:
 
 | Argument | Description |
@@ -46,6 +41,28 @@ Available Arguments:
 Example:
 
     python -m data_analysis.analysis --path ./data --dataset train,val --save_bboxes --verbose
+
+### Run Model Training
+
+The main script is inside the model_training/ folder.
+
+    python -m model_training.train
+
+Available Arguments:
+
+| Argument | Description |
+| :-- | :-- |
+| --path | Base dataset path containing all datasets (e.g., ./data).|
+| --model | Path or name of the YOLO model to load (passed to YOLO(args.model)). |
+| --epochs | Number of training epochs |
+| --mosaic | Mosaic augmentation probability (float 0–1).|
+| --translate | Translation augmentation magnitude (float 0–1). |
+| --scale | Scale augmentation magnitude (float 0–1). |
+
+Example:
+
+    python -m model_training.train --path ./data --mosaic 0.5 --translate 0.2
+    
 ## Data Analysis Insights
 **1. Spatial Bias**
 

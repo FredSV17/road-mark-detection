@@ -6,7 +6,7 @@ def run_yolo(args):
 
     model.train(
         data=f"{args.path}/data.yaml",
-        epochs=100,
+        epochs=args.epochs,
         hsv_h=0.0,
         hsv_s=0.0,
         hsv_v=0.0,
