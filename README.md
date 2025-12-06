@@ -63,6 +63,26 @@ Example:
 
     python -m model_training.train --path ./data --mosaic 0.5 --translate 0.2
     
+### Run Model Validation/Testing
+
+The main script is inside the model_validation/ folder.
+
+    python -m model_validation.validate
+
+Available Arguments:
+
+| Argument | Description |
+| :-- | :-- |
+| --path | Base dataset path containing all datasets (e.g., ./data).|
+| --model_path | Path or name of the YOLO model to load (passed to YOLO(args.model)). |
+| --test_imgs_path | Path of images to be tested |
+| --results_path | Path to save result images |
+| --verbose | Flag to enable verbose output for detailed logs.|
+
+Example:
+
+    python -m model_validation.validate --path ./data --test_imgs_path ./imgs/test_imgs --results_path ./imgs/results
+    
 ## Data Analysis Insights
 **1. Spatial Bias**
 
