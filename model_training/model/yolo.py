@@ -1,4 +1,6 @@
+import os
 from ultralytics import YOLO
+
 
 def run_yolo(args):
     # Load a model
@@ -17,9 +19,7 @@ def run_yolo(args):
         erasing=0.0,
         auto_augment=None,
     )
-
-    # # Evaluate model performance on the validation set
-    # metrics = model.val()
-
+    target_path = args.export_path
     # # Export the model to ONNX format
-    # path = model.export(format="onnx")  # return path to exported model
+    path = model.export(format="onnx")  # return path to exported model
+    os.rename(path, target_path)
