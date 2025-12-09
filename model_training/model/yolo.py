@@ -18,6 +18,9 @@ def run_yolo(args):
         mosaic=args.mosaic,
         erasing=0.0,
         auto_augment=None,
+        patience=20,
+        name=args.name,
+        seed=64
     )
     target_path = args.export_path
     # # Export the model to ONNX format

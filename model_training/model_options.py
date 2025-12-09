@@ -43,3 +43,9 @@ class ModelOptions(BaseOptions):
             default=0,
             help="Data augmentation option - scale"
         )
+        self.parser.add_argument(
+            "--name",
+            type=float,
+            default=0,
+            help="Data augmentation option - scale"
+        )
